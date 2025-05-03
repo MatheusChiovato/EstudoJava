@@ -1,11 +1,9 @@
-package Sistema;
+package sistema;
 
 import java.util.*;
 
-import Entidades.Desenvolvedor;
-import Entidades.Estagiario;
-import Entidades.Funcionario;
-import Entidades.Gerente;
+import entidades.*;
+import interfaces.*;
 
 public class SistemaFuncionarios {
     
@@ -44,6 +42,17 @@ public class SistemaFuncionarios {
         return salarioTotal;
     }
 
- 
+    public double calcularTotalBonus(List<Bonificavel> bonificaveis){
+        double total=0;
+        for (Funcionario f : funcionarios) {
+            if (f instanceof Bonificavel) {
+                Bonificavel b = (Bonificavel) f;
+                total += b.calcularBonus();
+            }
+        }
+        return total;
+    }
+
+
 
 }

@@ -1,6 +1,8 @@
-package Entidades;
+package entidades;
 
-public class Desenvolvedor extends Funcionario {
+import interfaces.Bonificavel;
+
+public class Desenvolvedor extends Funcionario implements Bonificavel {
     
     public Desenvolvedor(String nome,String cpf,double salarioBase){
         super(nome, cpf, salarioBase);
@@ -9,6 +11,11 @@ public class Desenvolvedor extends Funcionario {
     @Override
     public double calcularSalario(){
         return getSalarioBase() + 500;
+    }
+
+    @Override  
+    public double calcularBonus(){
+        return getSalarioBase()*0.10;
     }
 
 
