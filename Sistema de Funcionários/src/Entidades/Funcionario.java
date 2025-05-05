@@ -1,12 +1,17 @@
 package entidades;
 
+import excecoes.CpfInvalidoException;
+
 public abstract class Funcionario{
     private String nome;
     private String cpf;
     private double salarioBase;
 
 
-    public Funcionario(String nome, String cpf, double salarioBase){
+    public Funcionario(String nome, String cpf, double salarioBase) throws CpfInvalidoException{
+        if(cpf == null || cpf.trim().isEmpty()){
+            throw new CpfInvalidoException("CPF nao pode ser vazio");
+        }
         this.nome = nome;
         this.cpf = cpf;
         this.salarioBase = salarioBase;
