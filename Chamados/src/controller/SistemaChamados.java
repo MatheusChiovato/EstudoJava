@@ -14,54 +14,69 @@ public class SistemaChamados {
         Chamado chamado = new Chamado(user);
         Date data = new Date();
 
-        System.out.println("Qual o problema a relatar:\n");
+        System.out.println("Qual o problema a relatar:");
         String titulo = sc.nextLine();
         chamado.setTitulo(titulo);
 
-        System.out.println("Explique o problema:\n");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("Explique o problema:");
         String descricao = sc.nextLine();
         chamado.setDescricao(descricao);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-        chamado.setStatus("Aberto");
+        chamado.setStatus(Status.ABERTO);
         chamado.setDataDeAbertura(data);
 
         System.out.println("Qual a prioridade do chamado:");
         System.out.println("1 - Urgente");
         System.out.println("2 - Alta");
-        System.out.println("3 - Normal\n");
+        System.out.println("3 - Normal");
+        System.out.print("R: ");
 
         int op = sc.nextInt();
         sc.nextLine();
 
         switch (op) {
             case 1:
-                chamado.setPrioridade("Urgente");
+                chamado.setPrioridade(Prioridade.URGENTE);
                 break;
             case 2:
-                chamado.setPrioridade("Alta");
+                chamado.setPrioridade(Prioridade.ALTA);
                 break;
             case 3:
-                chamado.setPrioridade("Normal");
+                chamado.setPrioridade(Prioridade.NORMAL);
                 break;
             default:
-                System.out.println("Opção inválida!");
+                System.out.println("\nOpção inválida!");
                 break;
         }
-        System.out.println("Chamado aberto!\n");
-
         chamados.add(chamado);
+
+        System.out.println("\nChamado aberto!\n");
+        System.out.println("--------------------------------------\n");
     }
 
-    public void vincularTecnico(Tecnico tecnico, int id){
+    public void vincularTecnico(Tecnico tecnico){
         
+        System.out.println("Informe um ID: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        boolean encontrado=false;
         for(Chamado c : chamados){
             if(c.getId() == id){
+                encontrado = true;
                 c.setTecnicoResponsavel(tecnico);
-                c.setStatus("Em tratativa");
+                c.setStatus(Status.EM_TRATATIVA);
                 System.out.println("Tecnico " + tecnico.getNome() + " vinculado ao chamado #" + c.getId());
                 break;
             }
         }
+        if(!encontrado){
+            System.out.println("Chamado nao encontrado!");
+        }
+
+
     }
 
 
@@ -106,7 +121,7 @@ public class SistemaChamados {
 
     private void filtrarStatus(String status){
         for(Chamado c : chamados){
-            if(c.getStatus().toLowerCase().contains(status)){
+            if(c.getStatus().equals(status)){
                exibirChamado(c);
             }
         }
@@ -114,25 +129,26 @@ public class SistemaChamados {
     
     private void filtrarPrioridade(String prioridade){
         for(Chamado c : chamados){
-            if(c.getPrioridade().toLowerCase().contains(prioridade)){
+            if(c.getPrioridade().equals(prioridade)){
                 exibirChamado(c);
             }
         }
     }
 
     private void exibirChamado(Chamado c){
-        System.out.print("\n");
-                System.out.println("Chamado #" + c.getId());
-                System.out.println(c.getTitulo().toUpperCase());
-                System.out.println(c.getDescricao());
-                System.out.println("--------------------");
-                System.out.println(c.getPrioridade().toLowerCase());
-                System.out.println(c.getStatus().toUpperCase());
-                if(c.getTecnicoResponsavel() != null){
-                    System.out.println("Responsável: " + c.getTecnicoResponsavel());
-                }else{
-                    System.out.println("Nenhum responsável vinculado para tratativa.");
-                }
+    
+            System.out.println("Chamado #" + c.getId());
+            System.out.println(c.getTitulo().toUpperCase());
+            System.out.println(c.getDescricao());
+            System.out.println("~~~~~~~~~~~~~~~~");
+            System.out.println("Prioridade: " + c.getPrioridade());
+            System.out.println("Status: " + c.getStatus());
+            if(c.getTecnicoResponsavel() != null){
+                System.out.println("Responsável: " + c.getTecnicoResponsavel().getNome());
+            }else{
+                System.out.println("Nenhum responsável vinculado para tratativa.");
+            }
+        System.out.println("--------------------------------------\n");
     }
 
 
@@ -141,14 +157,14 @@ public class SistemaChamados {
         for(Chamado c : chamados){
             if(c.getId() == id){
                 Date data = new Date();
-                c.setStatus("Finalizado");
+                c.setStatus(Status.FINALIZADO);
                 c.setDataDeFechamento(data);
                 System.out.println("Chamado #" + c.getId() + " foi finalizado!");
                 break;
             }
-            if(!encontrado){
-                System.out.println("Chamado nao encontrado!");
-            }
+        }
+        if(!encontrado){
+            System.out.println("Chamado nao encontrado!");
         }
     }
 

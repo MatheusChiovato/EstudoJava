@@ -4,17 +4,18 @@ import java.util.*;
 
 public class Chamado {
     
-    private int id=1;
+    private int id;
+    private static int contatorId = 0;
     private String titulo;
     private String descricao;
-    private String prioridade;
-    private String status;
+    private Prioridade prioridade;
+    private Status status;
     private Date dataDeAbertura;
     private Date dataDeFechamento;
     private Usuario usuario;
     private Tecnico tecnicoResponsavel;
     public Chamado(Usuario usuario) {
-        this.id = id++;
+        this.id = contatorId++; 
         this.usuario = usuario;
     }
 
@@ -33,16 +34,16 @@ public class Chamado {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public String getPrioridade() {
+    public Prioridade getPrioridade() {
         return prioridade;
     }
-    public void setPrioridade(String prioridade) {
+    public void setPrioridade(Prioridade prioridade) {
         this.prioridade = prioridade;
     }
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
     public Date getDataDeAbertura() {
